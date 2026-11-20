@@ -1,0 +1,18 @@
+name: CI
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    if: false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: |
+          python -m venv .venv
+          .venv/bin/pip install -r requirements-ci.txt
+      - name: Test
+        run: .venv/bin/python -m pytest tests --junitxml=reports/pytest-junit.xml
